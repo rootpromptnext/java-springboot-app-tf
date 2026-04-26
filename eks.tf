@@ -7,7 +7,7 @@ resource "aws_eks_cluster" "eks" {
       aws_subnet.private_1.id,
       aws_subnet.private_2.id
     ]
-   endpoint_public_access = true
+    endpoint_public_access = true
   }
 
   depends_on = [

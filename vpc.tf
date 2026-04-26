@@ -22,7 +22,7 @@ resource "aws_subnet" "public_1" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "public-1"
+    Name                     = "public-1"
     "kubernetes.io/role/elb" = "1"
   }
 }
@@ -34,7 +34,7 @@ resource "aws_subnet" "public_2" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "public-2"
+    Name                     = "public-2"
     "kubernetes.io/role/elb" = "1"
   }
 }
@@ -48,7 +48,7 @@ resource "aws_subnet" "private_1" {
   availability_zone = "us-east-1a"
 
   tags = {
-    Name = "private-1"
+    Name                              = "private-1"
     "kubernetes.io/role/internal-elb" = "1"
   }
 }
@@ -59,7 +59,7 @@ resource "aws_subnet" "private_2" {
   availability_zone = "us-east-1b"
 
   tags = {
-    Name = "private-2"
+    Name                              = "private-2"
     "kubernetes.io/role/internal-elb" = "1"
   }
 }
