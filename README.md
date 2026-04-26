@@ -27,3 +27,9 @@ aws s3 mb s3://aws-iac-19159-tf
 ```
 ssh-keygen -t rsa
 ``
+
+### Add github secrets
+```
+AWS_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY
+```
