@@ -1,4 +1,4 @@
-## Manual install aws and terraform
+### Manual install aws and terraform
 Install aws cli
 ```
 curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
@@ -16,9 +16,14 @@ sudo mv terraform /usr/local/bin/
 terraform --version
 ```
 
-## Manual Bucket Creation (AWS CLI)
+### Manual Bucket Creation (AWS CLI)
 
 Create the bucket immediately via aws cli
 ```
 aws s3 mb s3://aws-iac-19159-tf
 ```
+
+### Create ssh key pairs
+```
+ssh-keygen -t rsa
+``
