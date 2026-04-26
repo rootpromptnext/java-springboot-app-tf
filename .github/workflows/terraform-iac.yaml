@@ -50,12 +50,12 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: terraform plan
 
       # Manual APPLY
       - name: Terraform Apply
         if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'apply'
-        run: terraform apply -auto-approve tfplan || terraform apply -auto-approve
+        run: terraform apply -auto-approve
 
       # Manual DESTROY
       - name: Terraform Destroy
