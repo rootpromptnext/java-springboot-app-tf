@@ -27,6 +27,7 @@ aws s3 mb s3://aws-iac-19159-tf
 ```
 ssh-keygen -t rsa
 ``
+### Add TF_VAR_public_key
 
 ### Add github secrets
 ```

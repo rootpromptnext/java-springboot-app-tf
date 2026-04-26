@@ -1,14 +1,17 @@
-# -------------------------------
-# READ YOUR LOCAL SSH PUBLIC KEY
-# -------------------------------
+variable "public_key" {}
+
 resource "aws_key_pair" "jenkins_key" {
   key_name   = "jenkins-key"
-  public_key = file("~/.ssh/id_rsa.pub")
+  public_key = var.public_key
 }
 
-# -------------------------------
+# READ YOUR LOCAL SSH PUBLIC KEY
+#resource "aws_key_pair" "jenkins_key" {
+#  key_name   = "jenkins-key"
+#  public_key = file("~/.ssh/id_rsa.pub")
+#}
+
 # SECURITY GROUP
-# -------------------------------
 resource "aws_security_group" "jenkins_sg" {
   name        = "jenkins-sg"
   description = "Allow SSH and Jenkins"
@@ -62,9 +65,7 @@ resource "aws_instance" "jenkins" {
               # Install base packages
               apt install -y openjdk-21-jdk curl gnupg unzip software-properties-common
 
-              # -------------------------------
               # Install Jenkins
-              # -------------------------------
               curl -fsSL https://pkg.jenkins.io/debian-stable/jenkins.io-2026.key | tee \
                 /usr/share/keyrings/jenkins-keyring.asc > /dev/null
 
@@ -78,9 +79,7 @@ resource "aws_instance" "jenkins" {
               systemctl enable jenkins
               systemctl start jenkins
 
-              # -------------------------------
               # Install Docker
-              # -------------------------------
               apt install -y docker.io
               systemctl enable docker
               systemctl start docker
@@ -88,23 +87,17 @@ resource "aws_instance" "jenkins" {
               usermod -aG docker ubuntu
               usermod -aG docker jenkins
 
-              # -------------------------------
               # Install AWS CLI v2
-              # -------------------------------
               curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
               unzip awscliv2.zip
               ./aws/install
 
-              # -------------------------------
               # Install kubectl
-              # -------------------------------
               curl -LO "https://dl.k8s.io/release/$(curl -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
               chmod +x kubectl
               sudo mv kubectl /usr/local/bin/
 
-              # -------------------------------
               # Permissions fix
-              # -------------------------------
               chmod 666 /var/run/docker.sock
 
               echo "Jenkins setup completed successfully!"
