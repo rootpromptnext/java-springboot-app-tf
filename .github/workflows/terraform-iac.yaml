@@ -11,10 +11,9 @@ on:
       action:
         description: "Choose Terraform Action"
         required: true
-        default: "plan"
+        default: "apply"
         type: choice
         options:
-          - plan
           - apply
           - destroy
 
@@ -33,11 +32,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Debug - List files
+        run: |
+          pwd
+          ls -la
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: ${{ env.TF_VERSION }}
 
+      # Runs on every commit / PR
       - name: Terraform Format Check
         run: terraform fmt -check -recursive
 
@@ -48,15 +53,14 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
-        if: github.event_name == 'pull_request' || github.event.inputs.action == 'plan'
         run: terraform plan -out=tfplan
 
-      # APPLY (manual button)
+      # Manual APPLY
       - name: Terraform Apply
-        if: github.event.inputs.action == 'apply'
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'apply'
         run: terraform apply -auto-approve tfplan || terraform apply -auto-approve
 
-      # DESTROY (manual button)
+      # Manual DESTROY
       - name: Terraform Destroy
-        if: github.event.inputs.action == 'destroy'
+        if: github.event_name == 'workflow_dispatch' && github.event.inputs.action == 'destroy'
         run: terraform destroy -auto-approve
