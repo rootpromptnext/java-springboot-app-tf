@@ -38,8 +38,6 @@ jobs:
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
-        with:
-          terraform_version: ${{ env.TF_VERSION }}
 
       # Runs on every commit / PR
       - name: Terraform Format Check
