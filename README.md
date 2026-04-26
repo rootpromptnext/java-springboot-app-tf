@@ -29,6 +29,8 @@ ssh-keygen -t rsa
 ``
 ### Add TF_VAR_public_key
 
+Add in Actions > Secrets
+
 ### Add github secrets
 ```
 AWS_ACCESS_KEY_ID
